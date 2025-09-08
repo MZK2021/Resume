@@ -438,10 +438,17 @@
         typeTerminalText();
         
         // Download button functionality
-        document.getElementById('download-btn').addEventListener('click', function() {
-            // In a real implementation, this would download a PDF version
-            alert('In a full implementation, this would download a PDF version of the resume. For now, you can save this page using your browser\'s "Save As" function.');
-        });
+
+document.getElementById("download-btn").addEventListener("click", function() {
+// Force download of resume.pdf (must be in same directory as index.html)
+const link = document.createElement("a");
+link.href = "resume.pdf"; // file name must match your actual PDF file
+link.download = "resume.pdf"; // name of the file when downloaded
+link.click();
+});
+
+
+
     </script>
 </body>
 </html>
