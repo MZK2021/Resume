@@ -29,7 +29,7 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.1;
+            opacity: 0.2; /* Increased visibility */
             pointer-events: none;
         }
         
@@ -37,6 +37,9 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            background: rgba(10, 10, 18, 0.7); /* Slight background for better contrast */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
         }
         
         header {
@@ -378,7 +381,7 @@
     </div>
 
     <script>
-        // Matrix rain background effect
+        // Matrix rain background effect with Amharic characters and Geez numbers
         const canvas = document.getElementById('matrix-bg');
         const ctx = canvas.getContext('2d');
         
@@ -390,26 +393,40 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
         
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&!?';
-        const fontSize = 14;
+        // Amharic characters and Geez numbers (0-9: ፩-፲, but we'll use a subset)
+        const amharicChars = 'ሀሁሂሃሄህሆለሉሊላሌልሎሏሐሑሒሓሔሕሖሗመሙሚማሜምሞሟሠሡሢሣሤሥሦሧረሩሪራሬርሮሯሰሱሲሳሴስሶሷሸሹሺሻሼሽሾሿቀቁቂቃቄቅቆቇቈቊቋቌቍቐቑቒቓቔቕቖቘቚቛቜቝበቡቢባቤብቦቧቨቩቪቫቬቭቮቯተቱቲታቴትቶቷቸቹቺቻቼችቾቿኀኁኂኃኄኅኆኇኈኊኋኌኍነኑኒናኔንኖኗኘኙኚኛኜኝኞኟአኡኢኣኤእኦኧከኩኪካኬክኮኯኰኲኳኴኵኸኹኺኻኼኽኾወዉዊዋዌውዎዏዐዑዒዓዔዕዖዘዙዚዛዜዝዞዟዠዡዢዣዤዥዦዧየዩዪያዬይዮዯደዱዲዳዴድዶዷዸዹዺዻዼዽዾዿጀጁጂጃጄጅጆጇገጉጊጋጌግጎጏጘጙጚጛጜጝጞጟጠጡጢጣጤጥጦጧጨጩጪጫጬጭጮጯጰጱጲጳጴጵጶጷጸጹጺጻጼጽጾጿፀፁፂፃፄፅፆፇፈፉፊፋፌፍፎፏፐፑፒፓፔፕፖፗፘፙፚ';
+        const geezNumbers = '፩፪፫፬፭፮፯፰፱፲፳፴፵፶፷፸፹፺፻';
+        const latinChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&!?';
+        
+        // Combine all characters for the matrix effect
+        const characters = amharicChars + geezNumbers + latinChars;
+        const fontSize = 16; // Slightly larger for better visibility
         const columns = canvas.width / fontSize;
         
         const drops = [];
         for (let i = 0; i < columns; i++) {
-            drops[i] = 1;
+            drops[i] = Math.random() * 100; // Random starting positions
         }
         
         function drawMatrix() {
+            // Semi-transparent black to create trailing effect
             ctx.fillStyle = 'rgba(10, 10, 18, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            ctx.fillStyle = '#00ff41';
-            ctx.font = `${fontSize}px monospace`;
+            ctx.font = `${fontSize}px 'Nyala', 'Abyssinica SIL', 'GF Zemen Unicode', sans-serif`;
             
             for (let i = 0; i < drops.length; i++) {
+                // Random character from our combined set
                 const text = characters[Math.floor(Math.random() * characters.length)];
+                
+                // Random green shades for variety
+                const greenValue = Math.floor(120 + Math.random() * 135); // 120-255
+                ctx.fillStyle = `rgb(0, ${greenValue}, 65)`;
+                
+                // Draw the character
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
                 
+                // Reset drops that reach the bottom with some randomness
                 if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
                 }
@@ -438,17 +455,13 @@
         typeTerminalText();
         
         // Download button functionality
-
-document.getElementById("download-btn").addEventListener("click", function() {
-// Force download of resume.pdf (must be in same directory as index.html)
-const link = document.createElement("a");
-link.href = "resume.pdf"; // file name must match your actual PDF file
-link.download = "resume.pdf"; // name of the file when downloaded
-link.click();
-});
-
-
-
+        document.getElementById("download-btn").addEventListener("click", function() {
+            // Force download of resume.docx (must be in same directory as index.html)
+            const link = document.createElement("a");
+            link.href = "Million_Kassaye_Resume_Updated1.docx"; // file name must match your actual DOCX file
+            link.download = "Million_Kassaye_Resume_Updated1.docx"; // name of the file when downloaded
+            link.click();
+        });
     </script>
 </body>
 </html>
